@@ -1,0 +1,49 @@
+﻿@model RezhCity.WEB.Models.ShortResumeView
+
+<li class="list-group-item" data-link-to-detail="@Model.Url">
+    <div class="row">
+        <div class="thumb-container">
+            <img src="@Url.Action("GetThumbnailByResumeId", new { id = Model.Id })" class="thumb" />
+        </div>
+        <div class="short-adv-info">
+            <div class="pull-left">
+                <div>
+                    <a href="@Model.Url" target="_blank" style="text-decoration: underline; font-size: 16px;">@Model.Name</a>
+                </div>
+                <div>
+                    <span style="font-size:12px;">@Model.Created</span>
+                </div>
+                @if (!String.IsNullOrEmpty(Model.Position))
+            {
+                    <div style="margin-top:5px;">
+                        <span style="font-weight:bold;">@Model.Position</span>
+                    </div>
+                }
+                @if (!String.IsNullOrEmpty(Model.Category))
+            {
+                    <div style="margin-top:5px;">
+                        <span style="font-size:12px;">@Model.Category</span>
+                    </div>
+                }
+            </div>
+            <div class="pull-right">
+                <div>
+                    <a href="@Model.PhoneLink" class="pull-right" style="font-size: 14px;">@Model.Phone</a>
+                </div>
+                @if (!String.IsNullOrEmpty(Model.VkId))
+                {
+                    <div>
+                        <a class="pull-right" href="@Model.VkId" target="_blank" style="font-size:14px;">Написать в ВК</a>
+                    </div>
+                }
+                @if (!String.IsNullOrEmpty(Model.OkId))
+                {
+                    <div>
+                        <a class="pull-right" href="@Model.OkId" target="_blank" style="font-size:14px;">Написать в ОК</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</li>
+

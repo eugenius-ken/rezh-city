@@ -1,0 +1,305 @@
+﻿@model RezhCity.WEB.Models.CreateResumeView
+@using RezhCity.DAL.Enums;
+@{
+    ViewBag.Title = "Разместить резюме - Поиск работы. Сайт объявлений города Реж";
+    ViewBag.Description = "Резюме на сайте Реж-сити. Поиск работы.";
+    ViewBag.Keywords = "работа город реж, найти работу в городе реж, реж работа, резюме реж";
+}
+@section FileInput{
+    @Styles.Render("~/Content/fileinput")
+}
+
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 margin-top-30">
+    @using (Html.BeginForm("Create", "Resume", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "formAdd" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="page-header">
+            <h3>Представьтесь, пожалуйста</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", Name = "model.Name" })
+                @Html.ValidationMessage("model.Name")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Name = "model.Phone" })
+                @Html.ValidationMessage("model.Phone")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Age, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <input type="number" min="0" max="100" class="form-control" id="Age" name="model.Age" aria-describedby="basic-addon" />
+                    <span class="input-group-addon" id="basic-addon">лет</span>
+                </div>
+                @Html.ValidationMessage("model.Age")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.VkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">vk.com/</span>
+                    <input type="text" class="form-control" id="VkId" name="model.VkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessage("model.VkId")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">ok.ru/profile/</span>
+                    <input type="text" class="form-control" id="OkId" name="model.OkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessage("model.OkId")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Фото", new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <input type="file" name="photo" id="photo" />
+            </div>
+        </div>
+        @*<div class="form-group">
+            <div class="col-md-7 col-md-offset-4">
+                <div class="alert alert-warning alert-dismissible" id="advice" text-align:center;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Желательно вертикальное фото :)
+                </div>
+            </div>
+        </div>*@
+        <div class="page-header">
+            <h3>Основная информация</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Category, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Category, "Не выбрано", new { @class = "form-control", Name = "model.Category" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Position, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Position, new { @class = "form-control", Name = "model.Position" })
+                @Html.ValidationMessage("model.Position")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Shedule, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Shedule, new { @class = "form-control", Name = "model.Shedule" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Experience, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Experience, new { @class = "form-control", Name = "model.Experience" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Education, new { @class = "form-control", Name = "model.Education" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5", Name = "model.Description" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Файл резюме", new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <input type="file" name="file" id="file" />
+            </div>
+        </div>
+
+        <div class="page-header workplaceHeader">
+            <h3>Место работы <a href="#" class="pull-right addWorkplace" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-workplace="false">Добавить</a></h3>
+        </div>
+        <div class="workplaceData"></div>
+        
+        <div class="page-header schoolHeader">
+            <h3>Место учебы <a href="#" class="pull-right addSchool" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-school="false">Добавить</a></h3>
+        </div>
+        <div class="schoolData"></div>
+
+        <div class="form-group">
+            <div class="col-md-7 col-md-offset-4">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Разместить</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/validation-messages-russian.js"></script>
+    <script src="~/Scripts/plugins/canvas-to-blob.min.js"></script>
+    @Scripts.Render("~/bundles/fileinput")
+    <script>
+
+        var workplaceCount = 1;
+        var schoolCount = 1;
+        var workplaceIndex = 0;
+        var schoolIndex = 0;
+
+        $(document).ready(function () {
+
+            $('#Phone').inputmask("+79999999999");
+
+            $('#file').fileinput({
+                language: 'ru',
+                maxFileCount: 1,
+                allowedFileExtensions: ['doc', 'docx', 'rtf', 'txt', 'pdf'],
+                showUpload: false,
+                maxFileSize: 10000,
+                previewZoomSettings: {
+                    image: { width: "auto", height: "100%", }
+                }
+            });
+
+            $('#file').on('fileerror', function (event, data, msg) {
+                console.log(data.id);
+                console.log(data.index);
+                console.log(data.file);
+                console.log(data.reader);
+                console.log(data.files);
+            });
+
+            $('#photo').fileinput({
+                language: 'ru',
+                maxFileCount: 10,
+                allowedFileTypes: ['image'],
+                allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+                showUpload: false,
+                maxFileSize: 10000,
+                previewZoomSettings: {
+                    image: { width: "auto", height: "100%", }
+                }
+            });
+
+            $('#photo').on('fileerror', function (event, data, msg) {
+                console.log(data.id);
+                console.log(data.index);
+                console.log(data.file);
+                console.log(data.reader);
+                console.log(data.files);
+            });
+        });
+
+        //workplace
+        $(document).on('click', '.addWorkplace', function (e) {
+            e.preventDefault();
+            var $this = $(e.currentTarget);
+            var $workplaceData = $this.parents('.workplaceHeader').next();
+            if ($this.attr('data-workplace') ==  'true') {
+                $workplaceData.empty();
+                $this.attr('data-workplace', false);
+                $this.text('Добавить');
+                workplaceCount--;
+                if (workplaceCount > 0) {
+                    $this.parents('.workplaceHeader').remove();
+                }
+
+                if (workplaceCount == 4) {
+                    $('.workplaceData').last().after('<div class="page-header workplaceHeader">' +
+                        '<h3>Место работы <a href="#" class="pull-right addWorkplace" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-workplace="false">Добавить</a></h3>' +
+                        '</div>' +
+                        '<div class="workplaceData"></div>');
+                }
+            }
+            else {
+                $this.addClass('disable-link');
+                $workplaceData.load('@Url.Action("GetWorkplaceView")?index=' + workplaceIndex++, function () {
+                    $this.removeClass('disable-link');
+                    $this.attr('data-workplace', true);
+                    $this.text('Удалить');
+                    workplaceCount++;
+
+                    if (workplaceCount < 5) {
+                        $('.workplaceData').last().after('<div class="page-header workplaceHeader">' +
+                        '<h3>Место работы <a href="#" class="pull-right addWorkplace" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-workplace="false">Добавить</a></h3>' +
+                        '</div>' +
+                        '<div class="workplaceData"></div>');
+                    }
+                    refreshValidator();
+                });
+            }
+        });
+
+        //school
+        $(document).on('click', '.addSchool', function (e) {
+            e.preventDefault();
+            var $this = $(e.currentTarget);
+            var $schoolData = $this.parents('.schoolHeader').next();
+            if ($this.attr('data-school') == 'true') {
+                $schoolData.empty();
+                $this.attr('data-school', false);
+                $this.text('Добавить');
+                schoolCount--;
+                if (schoolCount > 0) {
+                    $this.parents('.schoolHeader').remove();
+                }
+
+                if (schoolCount == 4) {
+                    $('.schoolData').last().after('<div class="page-header schoolHeader">' +
+                        '<h3>Место учебы <a href="#" class="pull-right addSchool" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-school="false">Добавить</a></h3>' +
+                        '</div>' +
+                        '<div class="schoolData"></div>');
+                }
+            }
+            else {
+                $this.addClass('disable-link');
+                $schoolData.load('@Url.Action("GetSchoolView")?index=' + schoolIndex++, function () {
+                    $this.removeClass('disable-link');
+                    $this.attr('data-school', true);
+                    $this.text('Удалить');
+                    schoolCount++;
+
+                    if (schoolCount < 5) {
+                        $('.schoolData').last().after('<div class="page-header schoolHeader">' +
+                        '<h3>Место учебы <a href="#" class="pull-right addSchool" style="font-size: 12px; text-decoration: underline; margin-top: 12px;" data-school="false">Добавить</a></h3>' +
+                        '</div>' +
+                        '<div class="schoolData"></div>');
+                    }
+                    refreshValidator();
+                });
+            }
+        });
+
+        $('#formAdd').submit(function () {
+            if ($(this).valid()) {
+                var $btn = $('#submitButton');
+                $btn.prop('disabled', true);
+                $btn.html('<span class="glyphicon glyphicon-refresh"></span>');
+            }
+        });
+
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        }); 
+
+        function refreshValidator() {
+            var $form = $('#formAdd');
+            $form.removeData('validator');
+            $form.removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse($form);
+        }
+
+    </script>
+
+}

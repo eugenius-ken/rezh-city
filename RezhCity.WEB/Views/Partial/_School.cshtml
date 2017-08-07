@@ -1,0 +1,25 @@
+﻿@model RezhCity.WEB.Models.CreateSchoolView
+
+<div class="form-group">
+    <input type="hidden" name="model.schools.Index" value="@Model.Index" />
+    @Html.Label($"schools[{Model.Index}].Name", "Название", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", Name = $"schools[{Model.Index}].Name" })
+        @Html.ValidationMessage($"schools[{Model.Index}].Name")
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"schools[{Model.Index}].Specialty", "Специальность", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextBoxFor(m => m.Specialty, new { @class = "form-control", Name = $"schools[{Model.Index}].Specialty" })
+        @Html.ValidationMessageFor(m => m.Specialty)
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"schools[{Model.Index}].FinishYear", "Год окончания", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.DropDownListFor(m => m.FinishYear, new SelectList(Model.Years), "Не выбрано", new { @class = "form-control", Name = $"schools[{Model.Index}].FinishYear" })
+    </div>
+</div>
+
+

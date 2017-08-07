@@ -1,0 +1,236 @@
+﻿@model RezhCity.WEB.Models.CreateVacancyView
+@using RezhCity.DAL.Enums;
+@{
+    ViewBag.Title = "Разместить вакансию - Поиск работы. Сайт объявлений города Реж";
+    ViewBag.Description = "Вакансии на сайте Реж-сити. Поиск работы.";
+    ViewBag.Keywords = "вакансии реж, работа реж, поиск работы в городе реж, найти работу город реж, реж работа";
+}
+
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 margin-top-30">
+    @using (Html.BeginForm("Create", "Vacancy", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "formAdd" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="page-header">
+            <h3>Представьтесь, пожалуйста</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Company, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Company, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Company)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OwnerName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OwnerName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h3>Параметры вакансии</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Position, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Position)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Category, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Category, "Не выбрано", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Duties, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Duties, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Duties)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Shedule, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Shedule, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.MinSalary, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">от</span>
+                            @Html.TextBoxFor(m => m.MinSalary, new { @class = "form-control", type = "number" })
+                            <span class="input-group-addon">руб.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">до</span>
+                            @Html.TextBoxFor(m => m.MaxSalary, new { @class = "form-control" })
+                            <span class="input-group-addon">руб.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Requirements, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Requirements, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Requirements)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Experience, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Experience, "Не имеет значения", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Education, "Не имеет значения", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Conditions, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Conditions, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Conditions)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "ул. Ленина, д. 1" })
+                @Html.ValidationMessageFor(m => m.Address)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Latitude)
+            @Html.HiddenFor(m => m.Longitude)
+            <div class="alert alert-warning alert-dismissible" id="advice" style="display:none; text-align:center;">
+                <button type="button" class="close" id="closeAdvice" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Неверно определился адрес? Просто перемести метку в нужное место :)
+            </div>
+            <div id="map" style="width:100%; height:400px;"></div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-7 col-md-offset-4">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Разместить</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/validation-messages-russian.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    
+    <script>
+
+        var map;
+        var adviceClosedByUser = false;
+        ymaps.ready(initMap);
+
+        function initMap() {
+            map = new ymaps.Map('map', {
+                center: [57.368254, 61.391380],
+                zoom: 12,
+                controls: ['zoomControl']
+            });
+        }
+
+        $(document).ready(function () {
+            $('#Phone').inputmask("+79999999999");
+        });
+
+        $('#Address').change(function () {
+            $('#Latitude').val(null);
+            $('#Longitude').val(null);
+            map.geoObjects.removeAll();
+
+            var value = this.value.trim();
+            if (value) {
+                var searchKey = 'Реж, ';
+                searchKey += this.value;
+
+                var geocoder = ymaps.geocode(searchKey, { results: 1 });
+                geocoder.then(function (result) {
+
+                    var obj = result.geoObjects.get(0);
+
+                    obj.options.set('draggable', true);
+                    obj.events.add('dragend', function (event) {
+                        var position = event.originalEvent.position;
+                        $('#Latitude').val(position[0]);
+                        $('#Longitude').val(position[1]);
+                    });
+
+                    obj.options.set('preset', 'islands#darkOrangeDotIcon');
+                    map.geoObjects.add(result.geoObjects);
+                    var coords = obj.geometry.getCoordinates();
+                    $('#Latitude').val(coords[0]);
+                    $('#Longitude').val(coords[1]);
+
+                    map.setCenter(coords, 16);
+
+                    if (!adviceClosedByUser) $('#advice').slideDown('slow');
+                });
+            }
+        });
+
+        $('#closeAdvice').click(function () {
+            adviceClosedByUser = true;
+        });
+
+        $('#formAdd').submit(function () {
+            if ($(this).valid()) {
+                var $btn = $('#submitButton');
+                $btn.prop('disabled', true);
+                $btn.html('<span class="glyphicon glyphicon-refresh"></span>');
+            }
+        });
+
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        }); 
+
+    </script>
+}
+
+
+

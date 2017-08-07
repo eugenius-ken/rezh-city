@@ -1,0 +1,459 @@
+﻿@model RezhCity.WEB.Models.CreateAutoView
+@using RezhCity.DAL.Enums;
+@{
+    ViewBag.Title = "Подать объявление - Авто. Сайт объявлений города Реж";
+    ViewBag.Description = "Разместить объявление на сайте Реж-сити. Авто.";
+    ViewBag.Keywords = "подать объявление город реж, разместить объявление в городе реже, реж объявления, город реж подача объявления";
+}
+@section FileInput{
+    @Styles.Render("~/Content/fileinput")
+}
+
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 margin-top-30">
+    @using (Html.BeginForm("Create", "Auto", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id="formAdd" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.WithParameters)
+        <div class="page-header">
+            <h3>Представьтесь, пожалуйста</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OwnerName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OwnerName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.VkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">vk.com/</span>
+                    <input type="text" class="form-control" id="VkId" name="VkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessageFor(m => m.VkId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">ok.ru/profile/</span>
+                    <input type="text" class="form-control" id="OkId" name="OkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessageFor(m => m.OkId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Object, new { @class = "col-md-4 control-label", id="labelType" })
+            <div class="col-md-7">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Auto) Автомобиль
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Moto) Мотоцикл
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Spares) Запчасти
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Other) Другое
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="page-header" id="parametersHeader" style="display: none;">
+            <h3>Параметры <a href="#" class="pull-right" id="toggleParameters" style="font-size: 12px; text-decoration: underline; margin-top: 12px;">Не хочу заполнять</a></h3>
+        </div>
+        <div id="parameters" style="display: none;">
+            <div class="form-group">
+                @Html.LabelFor(m => m.MarkName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.MarkName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MarkName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ModelName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.ModelName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ModelName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ProductionYear, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(m => m.ProductionYear, new SelectList(Model.Years), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TransmissionType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.TransmissionType, TransmissionType.Mechanic) Механика
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.TransmissionType, TransmissionType.Automat) Автомат
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.TransmissionType, TransmissionType.Robot) Робот
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.TransmissionType, TransmissionType.Variator) Вариатор
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.KmAge, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.KmAge, new { @class = "form-control", type = "number" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.State, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.State, State.Broken) Битый
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.State, State.NotBroken) Не битый
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EngineCapacity">Объем двигателя, л.</label>
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.EngineCapacity, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EngineCapacity)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EngineType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.EngineType, EngineType.Benzin) Бензин
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.EngineType, EngineType.Diesel) Дизель
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.EngineType, EngineType.Gas) Газ
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EnginePower, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.EnginePower, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.EnginePower)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DriveType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DriveType, RezhCity.DAL.Enums.DriveType.Forward) Передний
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DriveType, RezhCity.DAL.Enums.DriveType.Back) Задний
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DriveType, RezhCity.DAL.Enums.DriveType.Full) Полный
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CarcaseType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.EnumDropDownListFor(m => m.CarcaseType, "Не выбрано", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DoorsNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DoorsNumber, DoorsNumber.Two) 2
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DoorsNumber, DoorsNumber.Three) 3
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DoorsNumber, DoorsNumber.Four) 4
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.DoorsNumber, DoorsNumber.Five) 5
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Color, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Color, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Color)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SteeringWheelType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SteeringWheelType, SteeringWheelType.Left) Левый
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SteeringWheelType, SteeringWheelType.Right) Правый
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header" id="mainInfoHeader">
+            <h3>Основная информация</h3>
+        </div>
+        <div id="mainInfo">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control ", type = "number" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="images_1">Фото</label>
+                <div class="col-md-7">
+                    <input type="file" multiple name="images" id="images_1" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-7 col-md-offset-4">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary" id="submitButton">Разместить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/validation-messages-russian.js"></script>
+    <script src="~/Scripts/plugins/canvas-to-blob.min.js"></script>
+    @Scripts.Render("~/bundles/fileinput")
+    <script>
+        var imagesInputCount = 1;
+        var parametersIsOpen = false;
+
+        $(document).ready(function () {
+
+            $('#Phone').inputmask("+79999999999");
+            $('#EngineCapacity').inputmask("9.9");
+            activateRadioButtons();
+
+            $('#images_1').fileinput({
+                language: 'ru',
+                maxFileCount: 10,
+                allowedFileTypes: ['image'],
+                allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+                showUpload: false,
+                maxFileSize: 10000,
+                previewZoomSettings: {
+                    image: { width: "auto", height: "100%",  }
+                }
+            });
+
+            changeAdvName();
+
+            //if mobile
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('input[name="images"]').on('fileselect', createFileInput);
+            }
+        });
+
+        $('#toggleParameters').click(function (e) {
+            e.preventDefault();
+            if (parametersIsOpen) {
+                $('#parameters').slideUp('slow');
+                parametersIsOpen = false;
+                $(this).text('Заполнить');
+                $('#WithParameters').val(false);
+            }
+            else {
+                $('#parameters').slideDown('slow');
+                parametersIsOpen = true;
+                $(this).text('Не хочу заполнять');
+                $('#WithParameters').val(true);
+            }
+        });
+
+        $('#MarkName').change(function () {
+            changeAdvName();
+        });
+
+        $('#ModelName').change(function () {
+            changeAdvName();
+        });
+
+        $('#Type').change(function () {
+            changeAdvName();
+        });
+
+        function changeAdvName() {
+            var result = '';
+            var $advName = $('#Name');
+            $advName.empty();
+            var $labelType = $('#labelType');
+            var type = $('#Type').find("option:selected").text();
+            if (type == 'Продать') 
+            {
+                result += 'Продам';
+                $labelType.text('Что продаете');
+            }
+            else if (type == 'Купить'){
+                result += 'Куплю';
+                $labelType.text('Что покупаете');
+            }
+            else if (type == 'Обменять') {
+                result += 'Обменяю';
+                $labelType.text('Что меняете');
+            }
+            else if (type == 'Отдать даром') {
+                result += 'Отдам даром';
+                $labelType.text('Что отдаете');
+            }
+
+            var mark = $('#MarkName').val();
+            if (mark != '') {
+                result += ' ' + mark;
+            }
+
+            var model = $('#ModelName').val();
+            if (model != '') {
+                result += ' ' + model;
+            }
+
+            $advName.val(result);
+        }
+
+        $('input[name="Object"]').change(function () {
+            if ($(this).val() == 'Auto') {
+                showParametersBlock();
+            }
+            else {
+                hideParametersBlock();
+            }
+        });
+
+        $('#formAdd').submit(function () {
+            if ($(this).valid()) {
+                var $btn = $('#submitButton');
+                $btn.prop('disabled', true);
+                $btn.html('<span class="glyphicon glyphicon-refresh"></span>');
+            }
+        });
+
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        }); 
+
+        function activateRadioButtons() {
+            $('input[name="Object"]:checked').parent().addClass('active');
+            $('input[name="TransmissionType"]:checked').parent().addClass('active');
+            $('input[name="State"]:checked').parent().addClass('active');
+            $('input[name="EngineType"]:checked').parent().addClass('active');
+            $('input[name="DriveType"]:checked').parent().addClass('active');
+            $('input[name="DoorsNumber"]:checked').parent().addClass('active');
+            $('input[name="SteeringWheelType"]:checked').parent().addClass('active');
+        }
+
+        function showParametersBlock() {
+            $('#parametersHeader').slideDown('slow');
+            $('#parameters').slideDown('slow');
+            parametersIsOpen = true;
+            $('#WithParameters').val(true);
+        }
+
+        function hideParametersBlock() {
+            parametersIsOpen = false;
+            $('#parametersHeader').slideUp('slow');
+            $('#parameters').slideUp('slow');
+            $('#WithParameters').val(false);
+        }
+
+        function createFileInput(e) {
+            //if not exist next input
+            if (!$('#images_' + (imagesInputCount + 1)).length && imagesInputCount < 10) {
+                imagesInputCount++;
+                //insert input element
+                $(e.currentTarget).parents('.form-group').after(
+                    `<div class="form-group">
+                            <label class="col-md-4 control-label" for="images_` + imagesInputCount + `">Фото</label >
+                            <div class="col-md-7">
+                                <input type="file" multiple name="images" id="images_` + imagesInputCount + `" />
+                            </div>
+                         </div >`
+                );
+                //initialize fileinput
+                $('#images_' + imagesInputCount).fileinput({
+                    language: 'ru',
+                    maxFileCount: 1,
+                    allowedFileTypes: ['image'],
+                    allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+                    showUpload: false,
+                    maxFileSize: 10000,
+                    previewZoomSettings: {
+                        image: { width: "auto", height: "100%", }
+                    }
+                });
+
+                $('#images_' + imagesInputCount).on('fileselect', createFileInput);
+            }
+        }
+
+
+    </script>
+
+}

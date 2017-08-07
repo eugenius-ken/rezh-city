@@ -1,0 +1,498 @@
+﻿@model RezhCity.WEB.Models.CreateRealtyView
+@using RezhCity.DAL.Enums;
+@{
+    ViewBag.Title = "Подать объявление - Недвижимость. Сайт объявлений города Реж";
+    ViewBag.Description = "Разместить объявление на сайте Реж-сити. Недвижимость.";
+    ViewBag.Keywords = "подать объявление город реж, разместить объявление в городе реже, реж объявления, город реж подача объявления";
+}
+
+@section FileInput{
+    @Styles.Render("~/Content/fileinput")
+}
+
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 margin-top-30">
+    @using (Html.BeginForm("Create", "Realty", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "formAdd" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.WithParameters)
+        <div class="page-header">
+            <h3>Представьтесь, пожалуйста</h3>
+        </div>
+        @Html.HiddenFor(m => m.Latitude)
+        @Html.HiddenFor(m => m.Longitude)
+        <div class="form-group">
+            @Html.LabelFor(m => m.OwnerName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OwnerName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.VkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">vk.com/</span>
+                    <input type="text" class="form-control" id="VkId" name="VkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessageFor(m => m.VkId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OkId, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon">ok.ru/profile/</span>
+                    <input type="text" class="form-control" id="OkId" name="OkId" aria-describedby="basic-addon" />
+                </div>
+                @Html.ValidationMessageFor(m => m.OkId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Object, new { @class = "col-md-4 control-label", id = "labelCategory" })
+            <div class="col-md-7">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Appartments) Квартиру
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Room) Комнату
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.House) Дом
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Garage) Гараж
+                    </label>
+                    <label class="btn btn-default">
+                        @Html.RadioButtonFor(m => m.Object, AdvObject.Other) Другое
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header" id="parametersHeader" style="display: none;">
+            <h3>Параметры <a href="#" class="pull-right" id="toggleParameters" style="font-size: 12px; text-decoration: underline; margin-top: 12px;">Не хочу заполнять</a></h3>
+        </div>
+        <div id="parameters" style="display: none;">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EngineCapacity">Площадь, м<sup>2</sup></label>
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Square, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Square)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "ул. Ленина, д. 1" })
+                    @Html.ValidationMessageFor(m => m.Address)
+                </div>
+            </div>
+            <div class="form-group" id="roomNumber">
+                @Html.LabelFor(m => m.RoomNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.RoomNumber, RoomNumber.One) 1
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.RoomNumber, RoomNumber.Two) 2
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.RoomNumber, RoomNumber.Three) 3
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.RoomNumber, RoomNumber.Four) 4
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.RoomNumber, RoomNumber.FiveAndMore) 5 и более
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="floorNumber">
+                @Html.LabelFor(m => m.FloorNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.One) 1
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Two) 2
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Three) 3
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Four) 4
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Five) 5
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Six) 6
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Seven) 7
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Eight) 8
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Nine) 9
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.FloorNumber, FloorNumber.Ten) 10
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="summaryFloor">
+                @Html.LabelFor(m => m.SummaryFloor, new { @class = "col-md-4 control-label" })
+                <div class="col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.One) 1
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Two) 2
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Three) 3
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Four) 4
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Five) 5
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Six) 6
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Seven) 7
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Eight) 8
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Nine) 9
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.SummaryFloor, FloorNumber.Ten) 10
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="alert alert-warning alert-dismissible" id="advice" style="display:none; text-align:center;">
+                    <button type="button" class="close" id="closeAdvice" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Неверно определился адрес? Просто перемести метку в нужное место :)
+                </div>
+                <div id="map" style="width:100%; height:400px;"></div>
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h3>Основная информация</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Price, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control ", type = "number" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="images_1">Фото</label>
+            <div class="col-md-7">
+                <input type="file" multiple name="images" id="images_1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-7 col-md-offset-4">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Разместить</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/validation-messages-russian.js"></script>
+    <script src="~/Scripts/plugins/canvas-to-blob.min.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/fileinput")
+    <script>
+        var imagesInputCount = 1;
+        var parametersIsOpen = false;
+        var map;
+        var adviceClosedByUser = false;
+        ymaps.ready(initMap);
+        
+        function initMap() {
+            map = new ymaps.Map('map', {
+                center: [57.368254, 61.391380],
+                zoom: 12,
+                controls: ['zoomControl']
+            });
+        }
+
+        $(document).ready(function () {
+            $('#Phone').inputmask("+79999999999");
+            activateRadioButtons();
+
+            $('#images_1').fileinput({
+                language: 'ru',
+                maxFileCount: 10,
+                allowedFileTypes: ['image'],
+                allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+                showUpload: false,
+                maxFileSize: 10000,
+                previewZoomSettings: {
+                    image: { width: "auto", height: "100%", }
+                }
+            });
+
+            changeAdvName();
+
+            //if mobile
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('input[name="images"]').on('fileselect', createFileInput);
+            }
+        });
+
+        $('#toggleParameters').click(function (e) {
+            e.preventDefault();
+            if (parametersIsOpen) {
+                $('#parameters').slideUp('slow');
+                parametersIsOpen = false;
+                $(this).text('Заполнить');
+                $('#WithParameters').val(false);
+            }
+            else {
+                $('#parameters').slideDown('slow', fitMap);
+                parametersIsOpen = true;
+                $(this).text('Не хочу заполнять');
+                $('#WithParameters').val(true);
+            }
+        });
+
+        $('input[name="Object"]').change(function () {
+            var categoryValue = $(this).val();
+            changeAdvName(categoryValue);
+            if (categoryValue == 'Appartments' || categoryValue == 'Room') {
+                parametersIsOpen = true;
+                $('#parametersHeader').slideDown('slow');
+                $('#parameters').slideDown('slow', fitMap);
+                $('#roomNumber, #floorNumber, #summaryFloor').slideDown('slow');
+                $('#WithParameters').val(true);
+                setTimeout(function () { map.container.fitToViewport(); }, 500);
+            }
+            else if (categoryValue == 'House') {
+                $('#parametersHeader').slideDown('slow');
+                $('#parameters').slideDown('slow', fitMap);
+                $('#roomNumber, #summaryFloor').slideDown('slow');
+                $('#floorNumber').slideUp('slow');
+                $('#WithParameters').val(true);
+            }
+            else if (categoryValue == 'Garage') {
+                $('#parametersHeader').slideDown('slow');
+                $('#parameters').slideDown('slow', fitMap);
+                $('#roomNumber, #floorNumber, #summaryFloor').slideUp('slow');
+                $('#WithParameters').val(true);
+            }
+            else {
+                $('#parametersHeader').slideUp('slow');
+                $('#parameters').slideUp('slow');
+                $('#WithParameters').val(false);
+            }
+        });
+
+        function activateRadioButtons() {
+            $('input[name="Object"]:checked').parent().addClass('active');
+            $('input[name="RoomNumber"]:checked').parent().addClass('active');
+            $('input[name="FlooNumber"]:checked').parent().addClass('active');
+            $('input[name="SummaryFloor"]:checked').parent().addClass('active');
+        }
+
+        $('#Type').change(function () {
+            changeAdvName();
+        });
+
+        $('#RealtyType').change(function () {
+            changeAdvName();
+        });
+
+        function changeAdvName(category) {
+            var result = '';
+            var $advName = $('#Name');
+            $advName.empty();
+            $labelCategory = $('#labelCategory');
+
+            var type = $('#Type').find("option:selected").text();
+            if (type == 'Продать') {
+                result += 'Продам';
+                $labelCategory.text('Что продаете');
+            }
+            else if (type == 'Купить') {
+                result += 'Куплю';
+                $labelCategory.text('Что покупаете');
+            }
+            else if (type == 'Обменять') {
+                result += 'Обменяю';
+                $labelCategory.text('Что меняете');
+            }
+            else if (type == 'Сдать') {
+                result += 'Сдам';
+                $labelCategory.text('Что сдаете');
+            }
+            else if (type == 'Снять') {
+                result += 'Сниму';
+                $labelCategory.text('Что снимаете');
+            }
+
+            switch (category) {
+                case 'Appartments': result += ' квартиру'; break;
+                case 'Room': result += ' комнату'; break;
+                case 'House': result += ' дом'; break;
+                case 'Garage': result += ' гараж'; break;
+            }
+
+            $advName.val(result);
+        }
+
+        $('#Address').change(function () {
+            $('#Latitude').val(null);
+            $('#Longitude').val(null);
+            map.geoObjects.removeAll();
+
+            var value = this.value.trim();
+            if (value) {
+                var searchKey = 'Реж, ';
+                searchKey += this.value;
+
+                var geocoder = ymaps.geocode(searchKey, { results: 1 });
+                geocoder.then(function (result) {
+
+                    var obj = result.geoObjects.get(0);
+
+                    obj.options.set('draggable', true);
+                    obj.events.add('dragend', function (event) {
+                        var position = event.originalEvent.position;
+                        $('#Latitude').val(position[0]);
+                        $('#Longitude').val(position[1]);
+                    });
+
+                    obj.options.set('preset', 'islands#darkOrangeDotIcon');
+                    map.geoObjects.add(result.geoObjects);
+                    var coords = obj.geometry.getCoordinates();
+                    $('#Latitude').val(coords[0]);
+                    $('#Longitude').val(coords[1]);
+
+                    map.setCenter(coords, 16);
+
+                    if(!adviceClosedByUser) $('#advice').slideDown('slow');
+                });
+            }
+        });
+
+        $('#closeAdvice').click(function () {
+            adviceClosedByUser = true;
+        });
+
+        $('#formAdd').submit(function () {
+            if ($(this).valid()) {
+                var $btn = $('#submitButton');
+                $btn.prop('disabled', true);
+                $btn.html('<span class="glyphicon glyphicon-refresh"></span>');
+            }
+        });
+
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        }); 
+
+        function showParametersBlock() {
+            $('#parametersHeader').slideDown('slow');
+            $('#parameters').slideDown('slow');
+            parametersIsOpen = true;
+            $('#WithParameters').val(true);
+        }
+
+        function hideParametersBlock() {
+            parametersIsOpen = false;
+            $('#parametersHeader').slideUp('slow');
+            $('#parameters').slideUp('slow');
+            $('#WithParameters').val(false);
+        }
+
+        function fitMap() {
+            map.container.fitToViewport();
+        }
+
+        function createFileInput(e) {
+            //if not exist next input
+            if (!$('#images_' + (imagesInputCount + 1)).length && imagesInputCount < 10) {
+                imagesInputCount++;
+                //insert input element
+                $(e.currentTarget).parents('.form-group').after(
+                    `<div class="form-group">
+                            <label class="col-md-4 control-label" for="images_` + imagesInputCount + `">Фото</label >
+                            <div class="col-md-7">
+                                <input type="file" multiple name="images" id="images_` + imagesInputCount + `" />
+                            </div>
+                         </div >`
+                );
+                //initialize fileinput
+                $('#images_' + imagesInputCount).fileinput({
+                    language: 'ru',
+                    maxFileCount: 1,
+                    allowedFileTypes: ['image'],
+                    allowedFileExtensions: ['jpg', 'jpeg', 'gif', 'png'],
+                    showUpload: false,
+                    maxFileSize: 10000,
+                    previewZoomSettings: {
+                        image: { width: "auto", height: "100%", }
+                    }
+                });
+
+                $('#images_' + imagesInputCount).on('fileselect', createFileInput);
+            }
+        }
+
+    </script>
+
+}

@@ -1,0 +1,142 @@
+﻿@model RezhCity.WEB.Models.EditVacancyView
+@{
+    ViewBag.Title = "Редактирование";
+}
+
+<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 margin-top-30">
+    @using (Html.BeginForm("EditVacancy", "Check", FormMethod.Post, new { @class = "form-horizontal", id = "formAdd" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        <div class="page-header">
+            <h3>Представьтесь, пожалуйста</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Company, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Company, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Company)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OwnerName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OwnerName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+        </div>
+
+        <div class="page-header">
+            <h3>Параметры вакансии</h3>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Position, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Position)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Category, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Category, "Не выбрано", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Duties, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Duties, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Duties)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Shedule, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Shedule, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.MinSalary, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">от</span>
+                            @Html.TextBoxFor(m => m.MinSalary, new { @class = "form-control", type = "number" })
+                            <span class="input-group-addon">руб.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">до</span>
+                            @Html.TextBoxFor(m => m.MaxSalary, new { @class = "form-control" })
+                            <span class="input-group-addon">руб.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Requirements, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Requirements, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Requirements)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Experience, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Experience, "Не имеет значения", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.EnumDropDownListFor(m => m.Education, "Не имеет значения", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Conditions, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Conditions, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Conditions)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "ул. Ленина, д. 1" })
+                @Html.ValidationMessageFor(m => m.Address)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-7 col-md-offset-4">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary" id="submitButton">Редактировать</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

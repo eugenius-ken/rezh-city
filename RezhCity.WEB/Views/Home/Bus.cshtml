@@ -1,0 +1,97 @@
+﻿@model RezhCity.WEB.Models.OutcityBusView
+@{
+    ViewBag.Title = "Расписание междугородних автобусов Реж-Екатеринбург";
+    ViewBag.Description = "Расписание автобусов Реж Екатерибнург в реальном времени";
+    ViewBag.Keywords = "расписание автобусов реж екатеринбург, екатеринбург реж автобусы, 816 автобус, 527 автобус, реж екб расписание, автобусы реж екб";
+}
+
+<div class="row" style="margin-top:80px;">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="bus-container shadow">
+            <div class="page-header" style="margin-top:0px;">
+                <h1 style="margin-top:0px;">Маршрут №816</h1>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 16px;">из Режа в Екатеринбург</div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><span class="pull-right">@Model.TimeClosest816ToEkb</span></div>
+                </div>
+            </div>
+            <div>
+                @foreach (var bus in Model.Buses816ToEkb)
+                {
+                    if (bus.IsNext)
+                    {
+                        <div class="label label-default label-bus-next">@bus.Time.ToString("HH:mm")</div>
+                    }
+                    else
+                    {
+                        <div class="label label-default label-bus">@bus.Time.ToString("HH:mm")</div>
+                    }
+
+                }
+            </div>
+            <div class="page-header" style="margin-top:20px;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 16px;">из Екатеринбурга в Реж</div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><span class="pull-right">@Model.TimeClosest816ToRezh</span></div>
+                </div>
+            </div>
+            <div>
+                @foreach (var bus in Model.Buses816ToRezh)
+                {
+                    if (bus.IsNext)
+                    {
+                        <div class="label label-default label-bus-next">@bus.Time.ToString("HH:mm")</div>
+                    }
+                    else
+                    {
+                        <div class="label label-default label-bus">@bus.Time.ToString("HH:mm")</div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="bus-container shadow" style="margin-top:40px;">
+            <div class="page-header" style="margin-top:0px;">
+                <h1 style="margin-top:0px;">Маршрут №527</h1>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 16px;">из Режа в Екатеринбург</div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><span class="pull-right">@Model.TimeClosest527ToEkb</span></div>
+                </div>
+            </div>
+            <div>
+                @foreach (var bus in Model.Buses527ToEkb)
+                {
+                    if (bus.IsNext)
+                    {
+                        <div class="label label-default label-bus-next">@bus.Time.ToString("HH:mm")</div>
+                    }
+                    else
+                    {
+                        <div class="label label-default label-bus">@bus.Time.ToString("HH:mm")</div>
+                    }
+                }
+            </div>
+            <div class="page-header" style="margin-top:20px;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 16px;">из Екатеринбурга в Реж</div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><span class="pull-right">@Model.TimeClosest527ToRezh</span></div>
+                </div>
+            </div>
+            <div>
+                @foreach (var bus in Model.Buses527ToRezh)
+                {
+                    if (bus.IsNext)
+                    {
+                        <div class="label label-default label-bus-next">@bus.Time.ToString("HH:mm")</div>
+                    }
+                    else
+                    {
+                        <div class="label label-default label-bus">@bus.Time.ToString("HH:mm")</div>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

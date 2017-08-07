@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Успех";
+}
+
+<div class="row" style="margin-top:80px;">
+    <div class="col-md-12" style="text-align:center;">
+        <h3>@ViewBag.Message</h3>
+        <hr />
+        <h4>Обратите внимание, что ваше объявление будет автоматически размещено в группах <a href="https://vk.com/rezh__city" target="_blank">ВК</a> и <a href="https://ok.ru/group/54582661021938" target="_blank">ОК</a> после проверки</h4>
+    </div>
+    <div class="col-md-12" style="text-align:center;">
+        <a href="@Url.Action("Index", "Home")">На главную</a>
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                window.location = '@Url.Action("Index", "Home")';
+            }, 7000);
+        });
+    </script>
+
+}
+

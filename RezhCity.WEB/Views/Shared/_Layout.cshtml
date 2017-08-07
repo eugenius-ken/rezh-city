@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" content="@ViewBag.Keywords" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" type="image/png" href="~/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    @if (IsSectionDefined("FileInput"))
+    {
+        @RenderSection("FileInput", required: false)
+    }
+    @RenderSection("flexsliderCss", required: false)
+</head>
+<body class="background-color">
+    <div class="wrapper">
+        <div class="navbar navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img class="navbar-brand" src="~/Content/img/logo.png" alt="Реж сити" />
+                    </a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="glyphicon glyphicon-menu-down" style="color: #ffffff;"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="@Url.Action("Index", "Home")" class="top-menu">На главную</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle top-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Объявления <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "Auto")">Авто</a></li>
+                                <li><a href="@Url.Action("Index", "Electronic")">Бытовая электроника</a></li>
+                                <li><a href="@Url.Action("Index", "Furniture")">Мебель</a></li>
+                                <li><a href="@Url.Action("Index", "Realty")">Недвижимость</a></li>
+                                <li><a href="@Url.Action("Index", "Clothes")">Одежда</a></li>
+                                <li><a href="@Url.Action("Index", "Other")">Прочее</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle top-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Работа <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "Vacancy")">Вакансии</a></li>
+                                <li><a href="@Url.Action("Index", "Resume")">Резюме</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle top-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Ещё <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Bus", "Home")">Расписание автобусов</a></li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle top-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Проверка <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Advertisements", "Check")">Объявления</a></li>
+                                    <li><a href="@Url.Action("Vacancies", "Check")">Вакансии</a></li>
+                                    <li><a href="@Url.Action("Resumes", "Check")">Резюме</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @if (Model is RezhCity.WEB.Interfaces.ISearchable)
+        {
+            <div class="container-fluid logo">
+                <div class="container vertical-align-center">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            @using (Html.BeginForm("Index", Url.RequestContext.RouteData.GetRequiredString("Controller"), FormMethod.Get, new { id = "formSearch" }))
+                            {
+                                <input type="hidden" id="currentCategory" value="@Model.Category" />
+                                <input type="hidden" name="type" />
+                                <input type="hidden" name="obj" />
+                                <div class="input-group">
+                                    <input type="text" id="keyword" name="keyword" class="form-control" value="@Model.Keyword" />
+                                    <div class="input-group-btn">
+                                        @if (!String.IsNullOrEmpty(Model.Keyword))
+                                        {
+                                            <button type="button" class="btn btn-default" id="removeKeywordBtn"><span class="glyphicon glyphicon-remove"></span></button>
+                                        }
+                                        <button type="button" id="searchCategory" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Везде <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="search-category-item" data-id="Home">Везде</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a class="search-category-item" data-id="Auto">Авто</a></li>
+                                            <li><a class="search-category-item" data-id="Electronic">Бытовая электроника</a></li>
+                                            <li><a class="search-category-item" data-id="Furniture">Мебель</a></li>
+                                            <li><a class="search-category-item" data-id="Realty">Недвижимость</a></li>
+                                            <li><a class="search-category-item" data-id="Clothes">Одежда</a></li>
+                                            <li><a class="search-category-item" data-id="Other">Прочее</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a class="search-category-item" data-id="Vacancy">Вакансии</a></li>
+                                            <li><a class="search-category-item" data-id="Resume">Резюме</a></li>
+                                        </ul>
+                                        <button class="btn btn-primary" style="height: 34px;"><span class="glyphicon glyphicon-search"></span></button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <footer class="container-fluid">
+            <div class="footer-caption" style="margin-bottom:5px;">
+                <div class="footer-text">
+                    Объявление, размещенное на нашем портале, автоматически попадет в группы ВК и ОК
+                </div>
+                <div class="footer-img-container">
+                    <a href="https://vk.com/rezh__city" target="_blank" style="margin-right:3px;"><img src="~/Content/img/vk_logo.png" alt="Реж-сити. ВК" class="networks_logo" /></a>
+                    <a href="https://ok.ru/group/54582661021938" target="_blank" style="margin-left:3px;"><img src="~/Content/img/ok_logo.png" alt="Реж-сити. ОК" class="networks_logo" /></a>
+                </div>
+            </div>
+            <div class="footer-caption">&copy; @DateTime.Now.Year Реж-сити</div>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("flexsliderJs", required: false)
+    @RenderSection("scripts", required: false)
+    @if (Model is RezhCity.WEB.Interfaces.ISearchable)
+    {
+        <script>
+            $(document).ready(function () {
+                var controllerName = $('#currentCategory').val();
+                var buttonText = controllerName == 'Home' ? 'Везде ' : $('a[data-id="' + controllerName + '"]').text() + ' ';
+                $('#searchCategory').text(buttonText);
+                $('#searchCategory').append('<span class="caret">');
+
+                $('.search-category-item').click(function (e) {
+                    var clickedCategory = $(e.currentTarget).attr('data-id');
+                    controllerName = clickedCategory;
+                    $('#searchCategory').text($(e.currentTarget).text() + ' ');
+                    $('#searchCategory').append('<span class="caret">');
+                    $('#formSearch').attr('action', '/' + controllerName);
+                });
+            });
+        </script>
+    }
+
+</body>
+</html>

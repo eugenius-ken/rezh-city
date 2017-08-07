@@ -1,0 +1,109 @@
+﻿@model RezhCity.WEB.Models.DetailVacancyView
+@{
+    ViewBag.Title = Model.Position;
+}
+
+<div class="row">
+    <div class="col-md-4" style="margin-top:80px; margin-bottom:20px;">
+        <div class="vacancy-owner-info shadow">
+            <div class="vacancy-company">
+                @Model.Company
+            </div>
+            <div class="vacancy-owner">
+                @Model.OwnerName
+            </div>
+            <div class="vacancy-phone">
+                <a href="@Model.PhoneLink">@Model.Phone</a>
+            </div>
+            <div class="vacancy-email">
+                @Model.Email
+            </div>
+        </div>
+        <div class="vacancy-parameters shadow">
+            <div style="margin-bottom:5px;">
+                <span>График: </span><span class="vacancy-parameter">@Model.Shedule</span>
+            </div>
+            <div style="margin-bottom:5px;">
+                <span>Опыт работы: </span><span class="vacancy-parameter">@Model.Experience</span>
+            </div>
+            <div style="margin-bottom:5px;">
+                <span>Образование: </span><span class="vacancy-parameter">@Model.Education</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8" style="margin-top:80px; margin-bottom:20px;">
+        <div class="vacancy-main-info shadow">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="vacancy-position">@Model.Position</div>
+                    <div class="vacancy-category">@Model.Category</div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    @if (!String.IsNullOrEmpty(Model.Salary))
+                    {
+                        <div class="vacancy-salary pull-right">@Model.Salary</div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="vacancy-main-label">Обязанности</div>
+                    <div>@Html.Raw(Model.Duties)</div>
+
+                    <div class="vacancy-main-label">Требования</div>
+                    <div>@Html.Raw(Model.Requirements)</div>
+
+                    <div class="vacancy-main-label">Условия</div>
+                    <div>@Html.Raw(Model.Conditions)</div>
+
+                    @if (!String.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="vacancy-main-label">Доп. информация</div>
+                        <div>@Html.Raw(Model.Description)</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="vacancy-map-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="width:100%; height:400px; margin-top:20px;"></div>
+                </div>
+                @Html.HiddenFor(m => m.Latitude)
+                @Html.HiddenFor(m => m.Longitude)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script>
+
+        ymaps.ready(initMap);
+
+        function initMap() {
+            var latitude = $('#Latitude').val();
+            var longitude = $('#Longitude').val();
+            if (latitude && longitude) {
+                $('#mapContainer').show();
+                var map = new ymaps.Map('map', {
+                    center: [latitude, longitude],
+                    zoom: 17,
+                    controls: ['zoomControl']
+                });
+                var point = new ymaps.GeoObject({
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [latitude, longitude]
+                    }
+                });
+                point.options.set('preset', 'islands#darkOrangeDotIcon');
+                map.geoObjects.add(point);
+            }
+        }
+
+    </script>
+}
+

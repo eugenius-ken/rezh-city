@@ -1,0 +1,89 @@
+﻿@model RezhCity.WEB.Models.IndexView
+@using RezhCity.WEB.Models;
+@{
+    ViewBag.Title = "Доска объявлений и поиск работы в городе Реж";
+    ViewBag.Description = "Объявления в Реже - покупка, продажа, поиск работы.";
+    ViewBag.Keywords = "объявления в реже, реж объявления, объявления город реж, сайт объявлений город реж, реж сити, rezh city";
+}
+
+<div class="col-md-10 col-md-offset-1">
+    <div class="row top-buffer">
+        <div class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle width-100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Добавить объявление
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Create", "Auto")">Авто</a></li>
+                    <li><a href="@Url.Action("Create", "Electronic")">Бытовая электроника</a></li>
+                    <li><a href="@Url.Action("Create", "Furniture")">Мебель</a></li>
+                    <li><a href="@Url.Action("Create", "Realty")">Недвижимость</a></li>
+                    <li><a href="@Url.Action("Create", "Clothes")">Одежда</a></li>
+                    <li><a href="@Url.Action("Create", "Other")">Прочее</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="panel panel-default shadow">
+            <div class="panel-heading">Все объявления</div>
+            <ul class="list-group">
+                @foreach (var adv in Model.Advertisements)
+                {
+                    @Html.Partial("~/Views/Partial/_ShortAdv.cshtml", adv);
+                }
+                @if (Model.Advertisements.Count == 0)
+                {
+                    <li class="list-group-item" style="text-align:center;">
+                        Здесь пока нет объявлений
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <input type="hidden" id="pagesCount" value="@Model.PagesCount" />
+        <input type="hidden" id="currentPage" value="@Model.CurrentPage" />
+        <div style="text-align:center;">
+            <ul class="pagination shadow" id="pagination"></ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.simplePagination.js"></script>
+    <script>
+
+        $('div.panel li.list-group-item').click(function (event) {
+            if (event.target.nodeName == 'A') {
+                return;
+            }
+
+            var url = $(this).data('link-to-detail');
+            if (url != undefined) {
+                window.open(url, '_blank');
+            }
+        });
+
+        $('#pagination').pagination({
+            cssStyle: 'pagination',
+            pages: $('#pagesCount').val(),
+            currentPage: $('#currentPage').val(),
+            prevText: '<span aria-hidden="true">&laquo;</span>',
+            nextText: '<span aria-hidden="true">&raquo;</span>',
+            onPageClick: function (page) {
+                window.location = '@Url.Action("Index")?page=' + page;
+            }
+        });
+
+        $('#removeKeywordBtn').click(function () {
+            $('#formSearch').find('input[name="keyword"]').val(null);
+        });
+
+    </script>
+
+}
+

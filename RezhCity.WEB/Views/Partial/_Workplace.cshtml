@@ -1,0 +1,43 @@
+﻿@model RezhCity.WEB.Models.CreateWorkplaceView
+
+<div class="form-group">
+    <input type="hidden" name="model.workplaces.Index" value="@Model.Index" />
+    @Html.Label($"workplaces[{Model.Index}].Name", "Компания", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", Name = $"workplaces[{Model.Index}].Name" })
+        @Html.ValidationMessage($"workplaces[{Model.Index}].Name")
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"workplaces[{Model.Index}].Position", "Должность", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextBoxFor(m => m.Position, new { @class = "form-control", Name = $"workplaces[{Model.Index}].Position" })
+        @Html.ValidationMessage($"workplaces[{Model.Index}].Position")
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"workplaces[{Model.Index}].StartMonth", "Начало работы", new { @class = "col-md-4 control-label" })
+    <div class="col-md-4">
+        @Html.EnumDropDownListFor(m => m.StartMonth, "Не выбрано", new { @class = "form-control", Name = $"workplaces[{Model.Index}].StartMonth" })
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownListFor(m => m.StartYear, new SelectList(Model.Years), "Не выбрано", new { @class = "form-control", Name = $"workplaces[{Model.Index}].StartYear" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"workplaces[{Model.Index}].FinishMonth", "Конец работы", new { @class = "col-md-4 control-label" })
+    <div class="col-md-4">
+        @Html.EnumDropDownListFor(m => m.FinishMonth, "Не выбрано", new { @class = "form-control", Name = $"workplaces[{Model.Index}].FinishMonth" })
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownListFor(m => m.FinishMonth, new SelectList(Model.Years), "Не выбрано", new { @class = "form-control", Name = $"workplaces[{Model.Index}].FinishYear" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.Label($"workplaces[{Model.Index}].Description", "Комментарий", new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5", Name = $"workplaces[{Model.Index}].Description" })
+        @Html.ValidationMessage($"workplaces[{Model.Index}].Description")
+    </div>
+</div>
+

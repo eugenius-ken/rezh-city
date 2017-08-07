@@ -1,0 +1,188 @@
+﻿@model RezhCity.WEB.Models.DetailAutoAdvView
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@section flexsliderCss {
+    <link href="~/Content/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="~/Content/flexslider/flexslider.less" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-12" style="margin-top:50px; margin-bottom:20px;">
+        <div class="main-info shadow">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <div class="adv-name">@Model.Name</div>
+                    <div class="adv-created">размещено @Model.Created.ToString("dd-MM-yyyy HH:mm")</div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    @if (Model.Price != null)
+                    {
+                        <div class="adv-price pull-right">@Model.Price руб.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+        <div class="slider-container shadow">
+            <div id="slider" class="flexslider">
+                <ul class="slides">
+                    @if (Model.ImagesId.Count > 0)
+                    {
+                        foreach (var imageId in Model.ImagesId)
+                        {
+                            <li>
+                                <img src="@Url.Action("GetImage", new { id = imageId })" />
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <img src="@Url.Action("GetImage", new { id = Guid.Empty })" />
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="carousel" class="flexslider">
+                <ul class="slides">
+                    @if (Model.ImagesId.Count > 0)
+                    {
+                        foreach (var imageId in Model.ImagesId)
+                        {
+                            <li>
+                                <img src="@Url.Action("GetImage", new { id = imageId })" />
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <img src="@Url.Action("GetImage", new { id = Guid.Empty })" />
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <div class="owner-info shadow">
+            <div class="adv-phone"><a href="@Model.PhoneLink">@Model.Phone</a></div>
+            <div class="adv-owner">@Model.OwnerName</div>
+            @if (Model.VkId != null)
+            {
+                <div class="adv-vk"><a href="@Model.VkId" target="_blank">Написать в ВК</a></div>
+            }
+            @if (Model.OkId != null)
+            {
+                <div class="adv-ok"><a href="@Model.OkId" target="_blank">Написать в ОК</a></div>
+            }
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <div class="additional-info shadow">
+            <h4 style="font-weight:bold;">Дополнительная информация:</h4>
+            @Html.Raw(Model.Description)
+        </div>
+    </div>
+</div>
+@if (Model.IsParametersExist)
+{
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="parameters-info shadow">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="parameters-container">
+                            <span class="detail-label">Марка: </span><span class="detail-value">@Model.MarkName</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Модель: </span><span class="detail-value">@Model.ModelName</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Год выпуска: </span><span class="detail-value">@Model.ProductionYear</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Коробка передач: </span><span class="detail-value">@Model.TransmissionType</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Цвет: </span><span class="detail-value">@Model.Color</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="parameters-container">
+                            <span class="detail-label">Пробег, км: </span><span class="detail-value">@Model.KmAge</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Состояние: </span><span class="detail-value">@Model.State</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Объём двигателя, л.: </span><span class="detail-value">@Model.EngineCapacity</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Тип двигателя: </span><span class="detail-value">@Model.EngineType</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Мощность двигателя, л.с.: </span><span class="detail-value">@Model.EnginePower</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <div class="parameters-container">
+                            <span class="detail-label">Привод: </span><span class="detail-value">@Model.DriveType</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Тип кузова: </span><span class="detail-value">@Model.CarcaseType</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Кол-во дверей: </span><span class="detail-value">@Model.DoorsNumber</span>
+                        </div>
+                        <div class="parameters-container">
+                            <span class="detail-label">Руль: </span><span class="detail-value">@Model.SteeringWheelType</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section flexsliderJs {
+    @Scripts.Render("~/bundles/flexslider")
+}
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#carousel').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                slideshow: false,
+                itemWidth: 135,
+                itemMargin: 5,
+                asNavFor: '#slider',
+                prevText: '',
+                nextText: ''
+            });
+
+            $('#slider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                slideshow: false,
+                sync: "#carousel",
+                prevText: '',
+                nextText: ''
+            });
+
+        });
+
+    </script>
+}

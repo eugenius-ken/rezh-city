@@ -1,0 +1,556 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: Roboto, Verdana, Arial, Tahoma, 'Times New Roman', serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 100px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.top-menu {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    .top-menu:hover {
+        color: #dc883c;
+    }
+
+    .top-menu:focus {
+        color: #dc883c;
+    }
+
+.panel-heading {
+    font-weight: bold;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-right-0 {
+    padding-right: 0px;
+}
+
+.background-color {
+    /*background-color: #f6fbfd;*/
+    background-color: #eeeeee;
+}
+
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+.input-validation-error {
+    background: pink;
+    border: 1px solid red;
+}
+
+.center-to-div {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.thumb {
+    height: 100px;
+    width: 135px;
+}
+
+.thumb-all {
+    height: 100px;
+    max-width: 160px;
+}
+
+div.panel li.list-group-item:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.logo {
+    background: url(img/rezh-background.jpg) no-repeat center center;
+    background-size: cover;
+    height: 300px;
+}
+
+.vertical-align-center {
+    padding-top: 150px;
+}
+
+div.navbar.navbar-fixed-top {
+    background: rgba(42, 42, 42, 0.66);
+    margin-bottom: 0px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.navbar .navbar-nav {
+    margin-left: -150px;
+}
+
+.form-control:focus {
+    border-color: #ef7f1a;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(174, 117, 66);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(174, 117, 66);
+}
+
+.shadow {
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #dc883c;
+    border: none;
+}
+
+    .btn-primary:focus,
+    .btn-primary.focus {
+        color: #fff;
+        background-color: #b16a2a;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #b16a2a;
+        border: none;
+    }
+
+    .btn-primary:active,
+    .btn-primary.active,
+    .open > .dropdown-toggle.btn-primary {
+        color: #fff;
+        background-color: #b16a2a;
+        border: none;
+    }
+
+        .btn-primary:active:hover,
+        .btn-primary.active:hover,
+        .open > .dropdown-toggle.btn-primary:hover,
+        .btn-primary:active:focus,
+        .btn-primary.active:focus,
+        .open > .dropdown-toggle.btn-primary:focus,
+        .btn-primary:active.focus,
+        .btn-primary.active.focus,
+        .open > .dropdown-toggle.btn-primary.focus {
+            color: #fff;
+            background-color: #b16a2a;
+            border: none;
+        }
+
+.page-header {
+    border-bottom: 1px solid #6c6c6c;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+    text-decoration: none;
+    background-color: none;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: transparent;
+}
+
+.main-info {
+    background-color: #fff;
+    padding: 15px;
+    overflow-y: auto;
+    height: 103px;
+    margin-top: 20px;
+}
+
+.slider-container {
+    background-color: #fff;
+    /*height: 516px;*/
+    margin-bottom: 20px;
+}
+
+.adv-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.short-adv-price {
+    background-color: #fcb55e;
+    font-size: 16px;
+    padding: 4px;
+    font-weight: bold;
+}
+
+.adv-price {
+    font-size: 20px;
+    padding: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    background-color: #fcb55e;
+}
+
+.owner-info {
+    background-color: #fff;
+    padding: 15px;
+    height: 133px;
+}
+
+.adv-phone {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.adv-owner {
+    font-size: 18px;
+    padding: 10px 0px;
+}
+
+.slides img {
+    max-height: 400px;
+}
+
+.additional-info {
+    padding: 15px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+    height: 348px;
+}
+
+.parameters-info {
+    background-color: #fff;
+    padding: 15px;
+}
+
+.detail-label {
+    font-size: 15px;
+}
+
+.detail-value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.parameters-container {
+    margin-bottom: 10px;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .additional-info {
+        height: 338px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .additional-info {
+        height: 247px;
+    }
+
+    .main-info {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 767px) {
+    .additional-info {
+        height: auto;
+    }
+
+    .main-info {
+        margin-top: 80px;
+    }
+}
+
+.flex-direction-nav a {
+    overflow: initial !important;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #d0843e;
+    border-color: #d0843e;
+}
+
+@media (max-width: 767px) {
+    .navbar-nav .open .dropdown-menu > li > a {
+        color: #fff;
+    }
+
+        .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-nav .open .dropdown-menu > li > a:focus {
+            background-color: transparent;
+        }
+}
+
+.search-category-item {
+    cursor: pointer;
+}
+
+footer {
+    background: rgba(42, 42, 42, 0.66);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 55px;
+}
+
+.footer-caption {
+    text-align:center;
+    font-size: 13px;
+    color: #fff;
+}
+
+.footer-text {
+    font-size: 14px;
+}
+
+.footer-link {
+    color: #ef7f1a;
+}
+
+.footer-img-container {
+    margin-top:5px;
+}
+
+.resume-main-info {
+    margin-top: 80px;
+    background-color: #fff;
+    padding: 20px;
+    min-height: 352px;
+    font-size: 16px;
+}
+
+.resume-position {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.resume-parameters {
+    margin-top: 20px;
+}
+
+.resume-parameter-value {
+    font-weight: bold;
+}
+
+.resume-parameter-container {
+    margin-bottom: 5px;
+}
+
+.resume-photo {
+    margin-bottom: 20px;
+}
+
+.resume-owner-info {
+    background-color: #fff;
+    padding: 10px;
+    min-height: 152px;
+}
+
+.resume-owner-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.resume-owner-phone {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.resume-owner-vk {
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top:5px;
+}
+
+.resume-owner-ok {
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.short-vacancy-position {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.short-vacancy-company {
+    font-size: 16px;
+}
+
+.short-vacancy-salary {
+    background-color: #fcb55e;
+    font-size: 16px;
+    padding: 4px;
+    font-weight: bold;
+}
+
+.vacancy-owner-info {
+    background-color: #fff;
+    padding: 15px;
+}
+
+.vacancy-company {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.vacancy-owner {
+    margin-top: 5px;
+}
+
+.vacancy-phone {
+    font-size: 16px;
+}
+
+.vacancy-main-info {
+    background-color: #fff;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.vacancy-position {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.vacancy-category {
+}
+
+.vacancy-salary {
+    background-color: #fcb55e;
+    font-size: 16px;
+    padding: 4px;
+    font-weight: bold;
+}
+
+.vacancy-parameters {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.vacancy-parameter {
+    font-weight: bold;
+}
+
+.vacancy-main-label {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.label-bus {
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px;
+    background-color: #d07c2f;
+}
+
+.label-bus-next {
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 7px;
+    background-color: #60626f;
+}
+
+.bus-container {
+    background-color: #fff;
+    padding: 15px;
+}
+
+.disable-link {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}
+
+.thumb-container {
+    text-align: center;
+    float:left;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+.short-adv-info {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.networks_logo {
+    width:25px;
+}
+
+.check-advs-count {
+    text-align:center;
+    font-size: 16px;
+    font-weight:bold;
+}

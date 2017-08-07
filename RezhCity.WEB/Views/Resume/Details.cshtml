@@ -1,0 +1,148 @@
+﻿@model RezhCity.WEB.Models.DetailResumeView
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@section flexsliderCss {
+    <link href="~/Content/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="~/Content/flexslider/flexslider.less" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-5" style="margin-top:80px; margin-bottom:20px;">
+            <div class="resume-photo shadow">
+                <div id="slider" class="flexslider">
+                    <ul class="slides">
+                        <li>
+                            @if (Model.PhotoId.HasValue)
+                            {
+                                <img src="@Url.Action("GetPhoto", new { id = Model.PhotoId })" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Action("GetPhoto", new { id = Guid.Empty })" />
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="resume-owner-info shadow">
+                <div class="resume-owner-name">
+                    @Model.Name
+                </div>
+                @if (Model.Age.HasValue)
+                {
+                    <div>@Model.Age лет</div>
+                }
+                <div class="resume-owner-phone">
+                    <a href="@Model.PhoneLink">@Model.Phone</a>
+                </div>
+                @if (!String.IsNullOrEmpty(Model.VkId))
+                {
+                    <div class="resume-owner-vk">
+                        <a href="@Model.VkId" target="_blank">Написать в ВК</a>
+                    </div>
+                }
+                @if (Model.OkId != null)
+                {
+                    <div class="adv-ok"><a href="@Model.OkId" target="_blank">Написать в ОК</a></div>
+                }
+                @if (Model.FileId.HasValue)
+                {
+                    <div class="resume-download">
+                        <a href="@Url.Action("Download", new { id = Model.FileId })">Скачать резюме</a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="resume-main-info shadow">
+                <div class="resume-position">
+                    <span>@Model.Position</span>
+                </div>
+                <div class="resume-category">
+                    <span>@Model.Category</span>
+                </div>
+                <div class="resume-parameters">
+                    <div class="resume-parameter-container">
+                        <span>График: </span><span class="resume-parameter-value">@Model.Shedule</span>
+                    </div>
+                    <div class="resume-parameter-container">
+                        <span>Опыт работы: </span><span class="resume-parameter-value">@Model.Experience</span>
+                    </div>
+                    <div class="resume-parameter-container">
+                        <span>Образование: </span><span class="resume-parameter-value">@Model.Education</span>
+                    </div>
+                </div>
+                <div class="resume-parameters">
+                    <div>
+                        О себе:
+                    </div>
+                    <div>
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+                @if (Model.Workplaces.Count > 0)
+                {
+                    <div class="resume-parameters">
+                        <div class="resume-parameter-value" style="font-size:18px;">Места работы</div>
+                        @foreach (var workplace in Model.Workplaces)
+                        {
+                            <hr />
+                            <div>@workplace.Name</div>
+                            <div>@workplace.Position</div>
+                            <div>@workplace.StartMonth @workplace.StartYear - @workplace.FinishMonth @workplace.FinishYear</div>
+                            <hr />
+                        }
+                    </div>
+                }
+                @if (Model.Schools.Count > 0)
+                {
+                    <div class="resume-parameters">
+                        <div class="resume-parameter-value" style="font-size:18px;">Места учебы</div>
+                        @foreach (var school in Model.Schools)
+                        {
+                            <hr />
+                            <div>@school.Name</div>
+                            <div>@school.Specialty</div>
+                            if (school.FinishYear.HasValue)
+                            {
+                                <div>Год окончания - @school.FinishYear</div>
+                            }
+                            <hr />
+                        }
+                    </div>
+                }
+
+
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+@section flexsliderJs {
+    @Scripts.Render("~/bundles/flexslider")
+}
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#slider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                slideshow: false,
+                prevText: '',
+                nextText: ''
+            });
+
+        });
+
+    </script>
+}

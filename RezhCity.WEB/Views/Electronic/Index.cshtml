@@ -1,0 +1,105 @@
+﻿@model RezhCity.WEB.Models.IndexElectronicView
+@{
+    ViewBag.Title = "Продажа и покупка электроники в городе Реж";
+    ViewBag.Description = "Объявления о продаже и покупке электроники в Реже.";
+    ViewBag.Keywords = "продать телефон реж, купить телефон реж, продажа техники в городе реж, реж продажа бытовой техники, одежда купить город реж";
+}
+
+<div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+        <div class="row top-buffer">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-5">
+                @using (Html.BeginForm("Index", "Electronic", FormMethod.Get, new { id = "filterForm" }))
+                {
+                    <input type="hidden" name="keyword" />
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                <label for="Type">Тип объявления:</label>
+                                @Html.DropDownListFor(m => m.Type, Model.Types, "Любой", new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                                <button type="submit" class="btn btn-primary" style="margin-top:25px;">Применить</button>
+                            </div>
+                        </div>
+                }
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-7">
+                <div class="pull-right">
+                    <a href="@Url.Action("Create")" class="btn btn-primary" style="margin-top:25px;">Добавить объявление</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default shadow">
+                    <div class="panel-heading">Электроника</div>
+                    <ul class="list-group">
+                        @foreach (var adv in Model.Advertisements)
+                        {
+                            @Html.Partial("~/Views/Partial/_ShortAdv.cshtml", adv);
+                        }
+                        @if (Model.Advertisements.Count == 0)
+                        {
+                            <li class="list-group-item" style="text-align:center;">
+                                Здесь пока нет объявлений
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="hidden" id="pagesCount" value="@Model.PagesCount" />
+            <input type="hidden" id="currentPage" value="@Model.CurrentPage" />
+            <div style="text-align:center;">
+                <ul class="pagination shadow" id="pagination"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.simplePagination.js"></script>
+    <script>
+
+        $('div.panel li.list-group-item').click(function (event) {
+            if (event.toElement.nodeName == 'A') {
+                return;
+            }
+
+            var url = $(this).data('link-to-detail');
+            if (url != undefined) {
+                window.open(url, '_blank');
+            }
+        });
+
+        $('#pagination').pagination({
+            cssStyle: 'pagination',
+            pages: $('#pagesCount').val(),
+            currentPage: $('#currentPage').val(),
+            prevText: '<span aria-hidden="true">&laquo;</span>',
+            nextText: '<span aria-hidden="true">&raquo;</span>',
+            onPageClick: function (page) {
+                window.location = '@Url.Action("Index")?page=' + page;
+            }
+        });
+
+        $('#filterForm').submit(function (e) {
+            $('#filterForm').find('input[name="keyword"]').val($('#formSearch').find('input[name="keyword"]').val());
+            return true;
+        });
+
+        $('#formSearch').submit(function (e) {
+            $(this).find('input[name="type"]').val($('#Type').val());
+            return true;
+        });
+
+        $('#removeKeywordBtn').click(function () {
+            $('#formSearch').find('input[name="keyword"]').val(null);
+        });
+
+    </script>
+
+}
